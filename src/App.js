@@ -56,6 +56,7 @@ function App() {
   }
 ];
 const [submittedForm,setSubmittedForm]= useState({});
+const [loading,setLoading] = useState(false);
 useEffect(()=>{
   let json={};
    data.forEach((field)=>{
@@ -66,23 +67,27 @@ useEffect(()=>{
      }else if(field.type==='radio'){
       json[field.label]=field.defaultValue;
      }else if(field.type==='checkbox'){
-       let options =[];
+       let options ={};
       field.options.forEach(val=>{
-        //let check = false;
+        let check = true;
         for(var k=0;k<field.defaultValue.length;k++){
           if(field.defaultValue[k]===val){
-           // check = true;
-           options.push(val);
+            check = false;
+           options[val]=true;
             break;
           }
         }
-       // options[val]=check;
+       if(check){
+         options[val]=false;
+       }
       });
+     // alert(options);
        json[field.label] = options;
      }
    });
    //alert(JSON.stringify(json));
    setSubmittedForm(json);
+   setLoading(true);
 },[]);
   
  const selectedValue=(label,value)=>{
@@ -130,8 +135,8 @@ useEffect(()=>{
     <div className="App">
      <h1>Dynamic Form Component</h1>
      <div className="col-sm-12 col-md-12 col-lg-12" style={{marginLeft:'100px'}}>
-       <Form />
-       
+      {loading? <Form />:"Form Loading..."}
+       {JSON.stringify(submittedForm)}
        </div>
     </div>
   );

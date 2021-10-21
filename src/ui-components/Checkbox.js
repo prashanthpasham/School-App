@@ -4,14 +4,13 @@ function Checkbox(props) {
    
     const {required,label,options}=props;
      const [selvalue,setSelvalue] = useState(props.value);
-     
+    
     const onInputChange=(e)=>{
-        alert(JSON.stringify(selvalue));
-        setSelvalue({...selvalue,[e]:selvalue[e]?true:false},
-            ()=>{
-                alert(JSON.stringify(selvalue));
-                props.data(label,selvalue);
-            });
+     //   alert(JSON.stringify(selvalue));
+        selvalue[e.name]=e.checked;
+        setSelvalue({...selvalue});
+       // alert(JSON.stringify(selvalue))
+            props.data(label,selvalue);
         
         
      }
@@ -22,8 +21,8 @@ function Checkbox(props) {
               return (
                   <div className="form-check">
                       
-                  <input className="form-check-input" type="checkbox" checked={selvalue}  required={required}  
-                  onClick={(e)=>onInputChange(e.target.value)} id={index} value={element}/>
+                  <input className="form-check-input" name={element} type="checkbox"  required={required}  
+                  onClick={(e)=>onInputChange(e.target)} id={index} checked={selvalue[element]}/>
                     <label className="form-check-label" htmlFor={index}>{element}</label>  
                       </div>
                 
