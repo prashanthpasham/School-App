@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 
 function Radio(props) {
-    const {required,label,options,value}=props;
+    const {required,label,options,value,errors}=props;
     const [selvalue,setSelvalue] = useState(value);
     const onInputChange=(e)=>{
         setSelvalue(e);
@@ -10,7 +10,7 @@ function Radio(props) {
      }
     return (
         <div className="form-group">
-            <label >{label}</label><br/>
+            <label>{label}{required?<span style={{color:'red'}}>*</span>:""}</label><br/>
           {options.map((element,index)=>{
               return (
                   <div className="form-check">
@@ -22,6 +22,7 @@ function Radio(props) {
               )
           })  
         }
+         {errors!=undefined?<span style={{color:'red'}}>{errors[label]}</span>:""}
         </div>
     )
 }

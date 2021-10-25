@@ -1,7 +1,7 @@
 import React from 'react'
 
 function Select(props) {
-    const {required,label,options,value}=props;
+    const {required,label,options,value,errors}=props;
     
     const onInputChange=(e)=>{
         props.data(label,e);
@@ -9,7 +9,7 @@ function Select(props) {
      }
     return (
         <div className="form-group">
-          <label>{label}</label>
+          <label>{label}{required?<span style={{color:'red'}}>*</span>:""}</label><br/>
           <select className="form-select" key={label} onChange={(e)=>onInputChange(e.target.value)}
            required={required} value={value} >
               {
@@ -19,7 +19,9 @@ function Select(props) {
                       )
                   })
               }
-        </select>   
+
+        </select>  
+        {errors!=undefined?<span style={{color:'red'}}>{errors[label]}</span>:""} 
         </div>
     )
 }
